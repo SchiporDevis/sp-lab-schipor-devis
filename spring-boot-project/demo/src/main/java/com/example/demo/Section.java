@@ -13,11 +13,15 @@ public class Section implements Element {
         this.children = new ArrayList<>();
     }
 
-    @Override
-    public void print() {
+    public void render() {
         System.out.println(title);
-        for (Element element : children) {
-            element.print();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+        for (Element child : children) {
+            child.accept(visitor);
         }
     }
 

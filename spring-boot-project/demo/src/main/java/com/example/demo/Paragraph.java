@@ -20,15 +20,17 @@ public class Paragraph implements Element {
         return text;
     }
 
-    @Override
-    public void print() {
-        if (alignStrategy == null) {
-            // Comportament implicit (fără strategie)
-            System.out.println("Paragraph: " + text);
-        } else {
-            // Delegăm afișarea către strategie
+    public void render() {
+        if (alignStrategy != null) {
             alignStrategy.render(this.text);
+        } else {
+            System.out.println("Paragraph: " + text);
         }
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     // ... (restul metodelor din interfața Element rămân aceleași: add, remove, get care aruncă excepții)

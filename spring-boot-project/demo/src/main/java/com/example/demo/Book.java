@@ -3,6 +3,9 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book {
     private String title;
     private List<Author> authors;
@@ -14,6 +17,10 @@ public class Book {
         this.content = new ArrayList<>();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void addAuthor(Author author) {
         this.authors.add(author);
     }
@@ -22,19 +29,10 @@ public class Book {
         this.content.add(element);
     }
 
-    public void print() {
-        System.out.println("Book: " + title + "\n");
-
-        if (!authors.isEmpty()) {
-            System.out.println("Authors:");
-            for (Author author : authors) {
-                author.print();
-            }
-            System.out.println();
-        }
-
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
         for (Element element : content) {
-            element.print();
+            element.accept(visitor);
         }
     }
 }

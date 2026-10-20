@@ -17,11 +17,14 @@ public class ImageProxy implements Element { // Trebuie să fie un Element pentr
         return realImg;
     }
 
-    @Override
-    public void print() {
-        // Când se cere printarea, ne asigurăm că imaginea reală există, apoi o printăm
+    public void render() {
         loadImage();
-        realImg.print();
+        realImg.render();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     // --- Proxy-ul trebuie să respecte interfața Element ---

@@ -14,9 +14,13 @@ public class Image implements Element { // Sau implementează Picture, dacă aț
         }
     }
 
-    @Override
-    public void print() {
+    public void render() {
         System.out.println("Image with name: " + imageName);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
 

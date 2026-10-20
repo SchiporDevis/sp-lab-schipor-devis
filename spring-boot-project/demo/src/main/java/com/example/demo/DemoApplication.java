@@ -2,26 +2,36 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import com.example.demo.difexamples.ClientComponent;
+import com.example.demo.difexamples.SingletonComponent;
+import com.example.demo.difexamples.TransientComponent;
 
+@SpringBootApplication
 public class DemoApplication {
-    public static void main(String[] args) throws Exception {
-        Section cap1 = new Section("Capitolul 1");
-        Paragraph p1 = new Paragraph("Paragraph 1");
-        cap1.add(p1);
-        Paragraph p2 = new Paragraph("Paragraph 2");
-        cap1.add(p2);
-        Paragraph p3 = new Paragraph("Paragraph 3");
-        cap1.add(p3);
-        Paragraph p4 = new Paragraph("Paragraph 4");
-        cap1.add(p4);
 
-        cap1.add(new ImageProxy("ImageOne"));
-        cap1.add(new Image("ImageTwo"));
-        cap1.add(new Paragraph("Some text"));
-        cap1.add(new Table("Table 1"));
+    public static void main(String[] args) {
+        // Obținem contextul de Dependency Injection (DI) de la Spring
+        ApplicationContext context = SpringApplication.run(DemoApplication.class, args);
 
-        BookStatistics stats = new BookStatistics();
-        cap1.accept(stats);
-        stats.printStatistics();
+        System.out.println("\n--- TESTARE TRANSIENT COMPONENT ---");
+        TransientComponent transientBean1 = context.getBean(TransientComponent.class);
+        transientBean1.operation();
+
+        // De fiecare dată când cerem un TransientComponent, se creează o instanță nouă
+        TransientComponent transientBean2 = context.getBean(TransientComponent.class);
+        transientBean2.operation();
+
+        System.out.println("\n--- TESTARE SINGLETON COMPONENT ---");
+        SingletonComponent singletonBean1 = context.getBean(SingletonComponent.class);
+        singletonBean1.operation();
+
+        // Returnează exact aceeași instanță unică creată la pornire
+        SingletonComponent singletonBean2 = context.getBean(SingletonComponent.class);
+        singletonBean2.operation();
+
+        System.out.println("\n--- TESTARE CLIENT COMPONENT ---");
+        ClientComponent client = context.getBean(ClientComponent.class);
+        client.operation();
     }
 }

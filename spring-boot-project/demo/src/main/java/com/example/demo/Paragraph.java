@@ -1,10 +1,21 @@
 package com.example.demo;
 
-import javax.swing.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 
-public class Paragraph implements Element {
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Paragraph extends BaseElement {
     private String text;
+
+    @Transient
+    @JsonIgnore
     private AlignStrategy alignStrategy; // Referința către strategie
+
+    public Paragraph() {
+    }
 
     public Paragraph(String text) {
         this.text = text;
@@ -15,9 +26,18 @@ public class Paragraph implements Element {
         this.alignStrategy = alignStrategy;
     }
 
+    @JsonIgnore
+    public AlignStrategy getAlignStrategy() {
+        return alignStrategy;
+    }
+
     // Metoda pentru a obține textul (dacă alte clase au nevoie de el)
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void render() {

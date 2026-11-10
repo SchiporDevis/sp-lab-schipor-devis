@@ -1,8 +1,20 @@
 package com.example.demo;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+
 import java.util.concurrent.TimeUnit;
 
-public class Image implements Element { // Sau implementează Picture, dacă ați fost instruiți astfel
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Image extends BaseElement { // Sau implementează Picture, dacă ați fost instruiți astfel
+
+    @JsonProperty("imageName")
     private String imageName;
+
+    public Image() {
+    }
 
     public Image(String name) {
         this.imageName = name;
@@ -14,6 +26,15 @@ public class Image implements Element { // Sau implementează Picture, dacă aț
         }
     }
 
+    @JsonProperty("imageName")
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
     public void render() {
         System.out.println("Image with name: " + imageName);
     }
@@ -22,8 +43,6 @@ public class Image implements Element { // Sau implementează Picture, dacă aț
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
-
-
 
     /** EXTRA **********************************************************************************/
     // --- Metodele din Element (care aruncă excepții pentru că e Leaf) ---

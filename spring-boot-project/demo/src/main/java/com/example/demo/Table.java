@@ -1,9 +1,26 @@
 package com.example.demo;
 
-public class Table implements Element {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+
+@Entity
+@jakarta.persistence.Table(name = "book_tables")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Table extends BaseElement {
     private String title;
 
+    public Table() {
+    }
+
     public Table(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
     }
 

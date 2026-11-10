@@ -1,9 +1,25 @@
 package com.example.demo;
 
-public class TableOfContents implements Element {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class TableOfContents extends BaseElement {
     private String text;
 
+    public TableOfContents() {
+    }
+
     public TableOfContents(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
         this.text = text;
     }
 

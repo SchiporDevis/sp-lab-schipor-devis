@@ -15,3 +15,4 @@ public class TransientComponent {
         System.out.println("Invoked TransientComponent::operation() on " + this);
     }
 }
+}

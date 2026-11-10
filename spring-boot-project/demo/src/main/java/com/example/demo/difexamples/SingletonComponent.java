@@ -12,3 +12,4 @@ public class SingletonComponent {
         System.out.println("Invoked SingletonComponent::operation() on " + this);
     }
 }
+}

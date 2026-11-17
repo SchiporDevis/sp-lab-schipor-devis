@@ -23,4 +23,3 @@ public class ClientComponent {
         System.out.println(" o TransientComponent = " + tc);
     }
 }
-}

@@ -7,6 +7,7 @@ import com.example.demo.commands.DeleteBookCommand;
 import com.example.demo.commands.GetAllBooksCommand;
 import com.example.demo.commands.GetBookByIdCommand;
 import com.example.demo.commands.UpdateBookCommand;
+import com.example.demo.observer.BooksSubject;
 import com.example.demo.persistence.BooksRepository;
 import com.example.demo.persistence.BooksRepositoryAdapter;
 import com.example.demo.persistence.CrudRepository;
@@ -30,8 +31,16 @@ import java.util.Optional;
 public class BooksController {
 
     private final CommandContext commandContext;
+    private BooksSubject allBooksSubject;
 
     @Autowired
+    public BooksController(CrudRepository<Book, Integer> booksRepository, CommandContext commandContext,
+                           BooksSubject allBooksSubject) {
+        this.commandContext = commandContext;
+        this.commandContext.setBooksRepository(booksRepository);
+        this.allBooksSubject = allBooksSubject;
+    }
+
     public BooksController(CrudRepository<Book, Integer> booksRepository, CommandContext commandContext) {
         this.commandContext = commandContext;
         this.commandContext.setBooksRepository(booksRepository);
@@ -61,6 +70,9 @@ public class BooksController {
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody(required = false) Book book) {
         Book createdBook = new CreateBookCommand(commandContext, book).execute();
+        if (allBooksSubject != null) {
+            allBooksSubject.add(createdBook); // Lab 7: notifica observatorii SSE
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 

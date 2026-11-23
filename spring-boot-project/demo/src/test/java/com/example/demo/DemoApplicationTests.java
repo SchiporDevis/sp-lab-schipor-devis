@@ -4,12 +4,13 @@ import com.example.demo.controllers.BooksController;
 import com.example.demo.persistence.AuthorsRepositoryAdapter;
 import com.example.demo.persistence.BooksRepositoryAdapter;
 import com.example.demo.persistence.CrudRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ class DemoApplicationTests {
     private AuthorsRepositoryAdapter authorsRepositoryAdapter;
 
     @Test
+    @Transactional
     void contextLoadsAndCrudFlowWorks() throws Exception {
         assertNotNull(booksController);
         assertNotNull(booksCrudRepository);

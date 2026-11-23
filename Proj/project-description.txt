@@ -1,0 +1,66 @@
+PROIECT INDIVIDUAL - SABLOANE DE PROIECTARE
+===========================================
+
+Titlu proiect: ChordBook — Manager de Songbook-uri si Acorduri (Chitara & Pian)
+
+1. Descrierea proiectului
+-------------------------
+ChordBook este o aplicatie web simpla destinata persoanelor care canta la chitara
+sau pian dupa ureche si dupa acorduri. Aplicatia permite organizarea repertoriului
+muzical intr-o structura arborescenta, grupand piesele in songbook-uri (setlist-uri),
+impartite pe sectiuni (Intro, Strofa, Refren, Bridge, Outro) si elemente muzicale
+specifice (progresii de acorduri, diagrame de acorduri, notite pentru cantat dupa
+ureche si durata/masuri).
+
+Proiectul acopera cerintele minime ale materiei, aplicand sabloanele de proiectare
+studiate la laborator (in special Composite pentru structura arborescenta si Visitor
+pentru vizualizare si sumar).
+
+2. Structura arborescenta a datelor
+-----------------------------------
+  Songbook -> Piesa (Song) -> Sectiune (Intro / Strofa / Refren / ...)
+                                |-- Progresie de acorduri (ex: "G | D | Em | C")
+                                |-- Diagrama acord (imagine/poza chitara sau pian)
+                                |-- Notita muzicala (indiciu pentru cantat dupa ureche)
+                                +-- Durata / Masuri (secunde, nr. masuri, BPM)
+
+3. Functionalitati principale
+-----------------------------
+- <add>:
+  Crearea unui songbook nou si adaugarea de piese, sectiuni si elemente frunza
+  (acorduri, diagrame, notite, durate) in structura arborescenta.
+
+- <view>:
+  Afisarea ierarhica a unui songbook, a unei piese sau a unei sectiuni impreuna cu
+  toate elementele sale (acorduri, diagrame, notite si durata), cu optiune simpla
+  de transpunere a acordurilor sau afisare pentru chitara (Capo) / pian.
+
+- <summary>:
+  Generarea unui sumar automat pentru orice nod compus (songbook, piesa sau sectiune):
+  numar total de piese/sectiuni/elemente, durata totala estimata, numar total de masuri
+  si lista acordurilor unice folosite.
+
+4. Tehnologii utilizate
+-----------------------
+- Backend: Java 21 + Spring Boot (RESTful API)
+- Baza de date: H2 (cu Spring Data JPA / Hibernate)
+- Interfata web: pagina simpla HTML + CSS + JavaScript (servita direct din Spring Boot),
+  pentru a testa si folosi rapid operatiile <add>, <view> si <summary>.
+
+5. Sabloane de proiectare vizate (minim necesar)
+------------------------------------------------
+- Composite: modelarea structurii arborescente (Songbook -> Song -> Section -> elemente).
+- Visitor: parcurgerea arborelui pentru operatiile <view> si <summary>.
+- Proxy: incarcarea intarziata (lazy) a imaginilor/diagramelor de acorduri.
+- Command & Adapter/Repository: separarea operatiilor REST si a stratului de persistenta,
+  similar cu proiectul Book din laborator.
+
+6. Strategie Git (branch-uri pe functionalitati)
+------------------------------------------------
+Fiecare functionalitate va fi dezvoltata pe un branch separat, creat INTOTDEAUNA
+din branch-ul `main` (nu din branch-ul anterior), iar dupa finalizare va fi integrata
+in `main`:
+  - project-01: descrierea proiectului (`Proj/project-description.txt`)
+  - project-02-model: proiect Spring Boot + structura arborescenta (Composite) + DB H2
+  - project-03-api: operatiile <add>, <view>, <summary> (Visitor + REST API)
+  - project-04-ui: interfata web simpla (HTML/CSS/JS)
